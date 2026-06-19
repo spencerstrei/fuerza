@@ -1,27 +1,78 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fuerza — Support</title>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support — Fuerza</title>
+<meta name="description" content="Help and answers for Fuerza — the simple workout log with an on-device coach.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
- :root{--ink:#241636;--teal:#179B8C;--muted:#5b5570;}
- body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);max-width:720px;margin:0 auto;padding:48px 22px 80px;line-height:1.65;}
- h1{font-size:32px;margin:0 0 6px;} h2{font-size:20px;margin:30px 0 8px;}
- .pill{display:inline-block;background:#eafbf8;color:var(--teal);border-radius:999px;padding:3px 12px;font-size:13px;font-weight:600;margin-bottom:18px;}
- a{color:var(--teal);} .sub{color:var(--muted);margin:0 0 26px;}
- footer{margin-top:44px;color:var(--muted);font-size:13px;border-top:1px solid #eee;padding-top:16px;}
-</style></head><body>
- <div class="pill">Fuerza</div>
- <h1>Support</h1>
- <p class="sub">Less app. More gains.</p>
- <p>Need help with Fuerza, found a bug, or have a feature request? We'd love to hear from you.</p>
- <h2>Contact</h2>
- <p>Email <a href="mailto:spencerstrei@gmail.com">spencerstrei@gmail.com</a> and we'll get back to you as soon as we can.</p>
- <h2>Common questions</h2>
- <p><strong>How do I import a routine or my history?</strong><br>
- During onboarding (or from the Plan and History tabs) paste your routine or past workouts as plain text and Fuerza's on-device AI builds your plan and logs your history.</p>
- <p><strong>Is my data private?</strong><br>
- Yes. Everything is stored on your device and the AI runs locally. See our <a href="./">Privacy Policy</a>.</p>
- <p><strong>How do I add a custom exercise?</strong><br>
- Open the Exercises tab and tap the + button. You can also auto-fill the muscles and cues with AI.</p>
- <footer>© 2026 Strei Technologies · <a href="./">Privacy Policy</a></footer>
-</body></html>
+  :root{
+    --paper:#FBFAF6; --surface:#FFFFFF; --ink:#17201B; --muted:#5F6A63;
+    --accent:#12A56A; --accent-soft:#E7F6EE; --line:rgba(23,32,27,.10);
+    --serif:"Fraunces",Georgia,serif; --sans:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--paper);color:var(--ink);
+    font-family:var(--sans);-webkit-font-smoothing:antialiased;line-height:1.65}
+  a{color:var(--accent);text-decoration:none}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px}
+  nav{position:sticky;top:0;backdrop-filter:saturate(140%) blur(16px);-webkit-backdrop-filter:saturate(140%) blur(16px);
+    background:rgba(251,250,246,.72);border-bottom:1px solid var(--line);z-index:10}
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:10px;color:var(--ink)}
+  .brand img{height:30px;width:30px;border-radius:9px}
+  .brand span{font-weight:600;font-size:13px;letter-spacing:.26em}
+  main{padding:72px 0 96px}
+  h1{font-family:var(--serif);font-size:clamp(34px,5vw,50px);letter-spacing:-.018em;font-weight:500;margin-bottom:8px}
+  .date{color:var(--muted);font-size:14px;margin-bottom:40px}
+  h2{font-family:var(--serif);font-size:23px;font-weight:500;letter-spacing:-.01em;margin:38px 0 10px}
+  p,li{color:var(--muted);font-size:16px}
+  strong{color:var(--ink);font-weight:600}
+  ul{padding-left:22px;display:grid;gap:8px;margin-top:8px}
+  .callout{border:1px solid rgba(18,165,106,.28);background:var(--accent-soft);
+    border-radius:16px;padding:20px 22px;margin:24px 0;color:var(--ink);font-weight:500}
+  footer{border-top:1px solid var(--line);padding:36px 0;color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-in">
+  <a href="index.html" class="brand"><img src="assets/icon-180.png" alt=""><span>FUERZA</span></a>
+  <a href="index.html" style="font-size:14px;color:var(--muted)">← Back</a>
+</div></nav>
+<main class="wrap">
+  <h1>Support</h1>
+  <div class="date">We read every message.</div>
+
+  <div class="callout">Need a hand? Email <a href="mailto:support@fuerza.app">support@fuerza.app</a> and we'll get back to you.</div>
+
+  <h2>Do I need an account?</h2>
+  <p>No. Fuerza has no accounts and no sign-in. Open the app and start logging — everything is stored on your iPhone.</p>
+
+  <h2>Where is my data stored? Is it backed up?</h2>
+  <p>All of your workouts, routines, notes, and settings live on your device. Delete the app and the data goes with it, so export a full backup first from <strong>Settings → Export</strong> if you ever switch phones or reinstall.</p>
+
+  <h2>How do I add my own routine?</h2>
+  <p>Paste a program from notes, a coach, or any AI into <strong>Plan → Import</strong> and Fuerza builds the whole routine for you. Or start with the ready-made 4-Day Strength Split from onboarding.</p>
+
+  <h2>How does the coach decide my targets?</h2>
+  <p>Every target is computed on your device from your own logged history — beat last time, set by set, within your plan's rep ranges. Nothing is sent to a server. Flag a hard set or pain in your notes and the coach eases off.</p>
+
+  <h2>The rest timer or notifications aren't firing</h2>
+  <p>The rest timer uses notifications. Make sure notifications are allowed in <strong>iOS Settings → Fuerza → Notifications</strong>. The timer keeps running with your phone locked.</p>
+
+  <h2>Music controls (Apple Music / Spotify)</h2>
+  <p>Fuerza shows and controls your own playback during a workout. Apple Music asks for media-library permission; Spotify controls require the Spotify app installed on your phone. Both are optional and off until you use them.</p>
+
+  <h2>Can I track machines, holds, or cardio?</h2>
+  <p>Yes — machine-stack levels, timed holds (carries, planks) in seconds, and cardio by distance and pace, all alongside regular weight × reps. Switch units between lb and kg in Settings.</p>
+
+  <h2>Still stuck?</h2>
+  <p>Email <a href="mailto:support@fuerza.app">support@fuerza.app</a> with your iOS version and a short description (a screenshot helps). See also our <a href="privacy.html">Privacy Policy</a>.</p>
+</main>
+<footer><div class="wrap">© 2026 Strei Technologies</div></footer>
+</body>
+</html>

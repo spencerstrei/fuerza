@@ -2,72 +2,548 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Fuerza — Privacy Policy</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fuerza — Less app. More strength.</title>
+<meta name="description" content="Fuerza is the simple workout log with a private on-device coach: one-tap sets, concrete targets to beat, your whole plan in your pocket. No accounts. No ads.">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="apple-touch-icon" href="assets/icon-180.png">
+<meta property="og:title" content="Fuerza — Less app. More strength.">
+<meta property="og:description" content="The simple workout log with a coach built in. One-tap sets, targets to beat, 100% on-device.">
+<meta property="og:image" content="assets/shot-home.png">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..600;1,9..144,400..500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root { --ink:#241636; --teal:#179B8C; --muted:#5b5570; }
-  * { box-sizing:border-box; }
-  body { font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-         color:var(--ink); max-width:760px; margin:0 auto; padding:48px 22px 80px; line-height:1.65; }
-  h1 { font-size:32px; margin:0 0 6px; }
-  .sub { color:var(--muted); margin:0 0 32px; font-size:15px; }
-  h2 { font-size:20px; margin:34px 0 10px; }
-  p, li { font-size:16px; color:#2c2440; }
-  a { color:var(--teal); }
-  .pill { display:inline-block; background:#eafbf8; color:var(--teal); border-radius:999px;
-          padding:3px 12px; font-size:13px; font-weight:600; margin-bottom:18px; }
-  footer { margin-top:48px; color:var(--muted); font-size:13px; border-top:1px solid #eee; padding-top:18px; }
+  :root{
+    --paper:#FBFAF6; --surface:#FFFFFF; --surface-2:#F4F3EE;
+    --ink:#17201B; --muted:#5F6A63; --faint:#949C95;
+    --accent:#12A56A; --accent-soft:#E7F6EE;
+    --coral:#F2683F; --coral-soft:#FBEAE2;
+    --gold:#C9982B;
+    --line:rgba(23,32,27,.10); --line-soft:rgba(23,32,27,.06);
+    --shadow:0 24px 50px -28px rgba(23,32,27,.28);
+    --shadow-soft:0 14px 36px -24px rgba(23,32,27,.22);
+    --radius:22px;
+    --serif:"Fraunces",Georgia,"Times New Roman",serif;
+    --sans:"Inter",-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--paper); color:var(--ink);
+    font-family:var(--sans); -webkit-font-smoothing:antialiased; overflow-x:hidden; line-height:1.55;
+  }
+  a{color:inherit;text-decoration:none}
+  img{display:block;max-width:100%}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px}
+
+  /* ---------- soft ambient washes (light, low opacity) ---------- */
+  .wash{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;opacity:.6}
+  .wash-a{width:620px;height:620px;background:rgba(18,165,106,.14);top:-220px;right:-160px}
+  .wash-b{width:520px;height:520px;background:rgba(242,104,63,.10);top:38%;left:-220px}
+
+  /* ---------- chapter mark (echoes the app's onboarding) ---------- */
+  .mark{display:inline-flex;align-items:center;gap:11px;margin-bottom:18px}
+  .mark .n{font-family:var(--sans);font-size:12px;font-weight:600;color:var(--accent);letter-spacing:.04em}
+  .mark .ln{width:26px;height:1px;background:var(--line)}
+  .mark .t{font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;color:var(--faint)}
+
+  /* ---------- nav ---------- */
+  nav{
+    position:fixed;top:0;left:0;right:0;z-index:50;
+    backdrop-filter:saturate(140%) blur(16px);-webkit-backdrop-filter:saturate(140%) blur(16px);
+    background:rgba(251,250,246,.7); border-bottom:1px solid var(--line-soft);
+  }
+  .nav-in{display:flex;align-items:center;justify-content:space-between;height:66px}
+  .brand{display:flex;align-items:center;gap:10px}
+  .brand img{height:30px;width:30px;border-radius:9px}
+  .brand span{font-weight:600;font-size:13px;letter-spacing:.26em;color:var(--ink)}
+  .nav-links{display:flex;gap:30px;align-items:center;font-size:14.5px;color:var(--muted);font-weight:500}
+  .nav-links a:hover{color:var(--ink)}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--ink);color:#fff;font-weight:600;font-size:14px;
+    padding:10px 20px;border-radius:999px;transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-soft)}
+  @media (max-width:760px){.nav-links a:not(.btn){display:none}}
+
+  /* ---------- hero ---------- */
+  header{position:relative;z-index:1;padding:170px 0 56px}
+  .hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:9px;font-size:13px;font-weight:600;color:var(--accent);
+    border:1px solid rgba(18,165,106,.28);background:var(--accent-soft);
+    padding:7px 15px;border-radius:999px;margin-bottom:26px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);animation:pulse 2.4s ease-in-out infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+  h1{
+    font-family:var(--serif);font-weight:500;
+    font-size:clamp(46px,7.2vw,88px);line-height:1.0;letter-spacing:-.02em;
+  }
+  h1 em{font-style:italic;color:var(--accent);font-weight:500}
+  .lede{margin:26px 0 36px;font-size:19px;color:var(--muted);max-width:33em;line-height:1.65}
+  .cta-row{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+  .store-badge{
+    display:inline-flex;align-items:center;gap:12px;border:1px solid var(--line);
+    background:var(--surface);border-radius:15px;padding:11px 22px;box-shadow:var(--shadow-soft);
+    transition:transform .18s ease,box-shadow .18s ease;
+  }
+  .store-badge:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .store-badge svg{width:25px;height:25px;fill:var(--ink)}
+  .store-badge .t{line-height:1.15}
+  .store-badge .t small{display:block;font-size:11px;color:var(--faint)}
+  .store-badge .t b{font-size:17px;font-weight:600;letter-spacing:-.01em}
+  .soon{font-size:13.5px;color:var(--faint)}
+
+  /* phone */
+  .phone{
+    position:relative;width:min(322px,80vw);margin:0 auto;
+    border-radius:54px;padding:12px;
+    /* Graphite device bezel — reads clearly as a phone on the light page,
+       with a soft rim highlight for that titanium-edge feel. */
+    background:linear-gradient(155deg,#4b504e 0%,#2c312f 46%,#1b1f1e 100%);
+    box-shadow:
+      0 50px 110px -34px rgba(23,32,27,.55),
+      0 4px 12px rgba(23,32,27,.20),
+      inset 0 0 0 1px rgba(255,255,255,.12),
+      inset 0 1px 1px rgba(255,255,255,.18);
+  }
+  .phone .screen{border-radius:44px;overflow:hidden;background:#000}
+  .phone .island{position:absolute;top:25px;left:50%;transform:translateX(-50%);
+    width:96px;height:28px;border-radius:999px;background:#000;z-index:2}
+  .hero .phone{animation:float 7.5s ease-in-out infinite}
+  @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+  /* interactive hero carousel (swipe / tap / dots to explore the app) */
+  .carousel{position:relative;width:100%;aspect-ratio:414/900;overflow:hidden;background:#000;touch-action:pan-y;cursor:grab}
+  .carousel.grabbing{cursor:grabbing}
+  .carousel .track{display:flex;height:100%;will-change:transform;transition:transform .5s cubic-bezier(.22,.61,.36,1)}
+  .carousel .track.nosnap{transition:none}
+  .carousel .track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;-webkit-user-drag:none;user-select:none;pointer-events:none}
+  .carousel .tapzone{position:absolute;top:0;bottom:0;width:32%;border:0;background:transparent;padding:0;cursor:pointer;z-index:3;-webkit-tap-highlight-color:transparent}
+  .carousel .tapzone.left{left:0}
+  .carousel .tapzone.right{right:0}
+  .carousel .tapzone:focus-visible{outline:2px solid var(--accent);outline-offset:-6px;border-radius:34px}
+  .phone-ui{margin-top:20px;display:flex;flex-direction:column;align-items:center;gap:11px}
+  .phone-dots{display:flex;gap:8px;align-items:center}
+  .phone-dots button{width:8px;height:8px;border-radius:999px;border:0;padding:0;background:rgba(23,32,27,.18);cursor:pointer;transition:width .3s ease,background .3s ease}
+  .phone-dots button[aria-selected="true"]{width:24px;background:var(--accent)}
+  .phone-dots button:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+  .phone-cap{font-size:13.5px;font-weight:500;color:var(--muted);min-height:1.2em;text-align:center}
+  .phone-cap b{color:var(--ink);font-weight:600}
+  .phone-hint{font-size:12px;color:var(--faint);display:inline-flex;align-items:center;gap:6px;transition:opacity .4s ease}
+  .phone-hint.gone{opacity:0}
+  @media (prefers-reduced-motion:reduce){.carousel .track{transition:none}}
+  @media (max-width:880px){
+    .hero{grid-template-columns:1fr;text-align:center}
+    .lede{margin-inline:auto}.cta-row{justify-content:center}
+    .mark{justify-content:center}
+    header{padding-top:128px}
+  }
+
+  /* ---------- trust strip ---------- */
+  .strip{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;padding:24px 0 0;position:relative;z-index:1}
+  .chip{
+    font-size:13.5px;font-weight:500;color:var(--muted);
+    border:1px solid var(--line-soft);border-radius:999px;padding:9px 18px;background:var(--surface);
+    box-shadow:var(--shadow-soft);
+  }
+  .chip b{color:var(--accent);font-weight:600}
+
+  /* ---------- sections ---------- */
+  section{position:relative;z-index:1;padding:104px 0}
+  h2{font-family:var(--serif);font-size:clamp(32px,4.6vw,52px);letter-spacing:-.018em;font-weight:500;line-height:1.06}
+  .sub{color:var(--muted);font-size:18px;margin-top:18px;max-width:38em;line-height:1.65}
+
+  /* feature grid */
+  .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;margin-top:54px}
+  @media (max-width:760px){.grid{grid-template-columns:1fr}}
+  .card{
+    position:relative;border-radius:var(--radius);padding:32px;
+    background:var(--surface);border:1px solid var(--line-soft);box-shadow:var(--shadow-soft);
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+  .card .ic{
+    width:48px;height:48px;border-radius:15px;display:flex;align-items:center;justify-content:center;
+    background:var(--accent-soft);margin-bottom:20px;
+  }
+  .card .ic svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+  .card h3{font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:9px}
+  .card p{color:var(--muted);font-size:15.5px;line-height:1.6}
+  .card .tag{position:absolute;top:28px;right:28px;font-size:11px;font-weight:600;color:var(--coral);
+    background:var(--coral-soft);border-radius:999px;padding:5px 11px;letter-spacing:.04em}
+
+  /* showcase rows */
+  .show{display:grid;grid-template-columns:1fr 1fr;gap:68px;align-items:center;padding:60px 0}
+  .show:nth-child(even) .phone-col{order:-1}
+  @media (max-width:880px){
+    .show{grid-template-columns:1fr;gap:40px;text-align:center}
+    .show .phone-col{order:-1 !important}.show .checks li{justify-content:center}
+    .show .mark{justify-content:center}
+  }
+  .show h3{font-family:var(--serif);font-size:clamp(27px,3.6vw,38px);font-weight:500;letter-spacing:-.015em;margin-bottom:14px;line-height:1.1}
+  .show p{color:var(--muted);font-size:16.5px;line-height:1.62}
+  .checks{list-style:none;margin-top:24px;display:grid;gap:13px}
+  .checks li{display:flex;gap:12px;align-items:flex-start;color:var(--ink);font-size:15.5px;line-height:1.5}
+  .checks svg{flex:none;width:20px;height:20px;margin-top:2px;stroke:var(--accent);fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+
+  /* coach band */
+  .coach-band{
+    border-radius:30px;padding:58px 50px;
+    background:
+      radial-gradient(760px 380px at 8% 0%,rgba(18,165,106,.10),transparent 62%),
+      var(--surface);
+    border:1px solid var(--line-soft);box-shadow:var(--shadow);
+    display:grid;grid-template-columns:1.08fr .92fr;gap:46px;align-items:center;
+  }
+  @media (max-width:880px){.coach-band{grid-template-columns:1fr;padding:40px 26px}}
+  .target-card{
+    background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;
+    font-variant-numeric:tabular-nums;box-shadow:var(--shadow-soft);
+  }
+  .target-card .lab{display:flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;
+    letter-spacing:.12em;color:var(--accent);margin-bottom:14px}
+  .target-card .lab svg{width:14px;height:14px;stroke:var(--accent);fill:none;stroke-width:2.4}
+  .target-card .big{font-size:34px;font-weight:600;letter-spacing:-.02em;font-family:var(--sans)}
+  .target-card .big span{color:var(--faint);font-weight:500;font-size:18px;margin-left:8px}
+  .target-card .why{margin-top:14px;color:var(--muted);font-size:14.5px;border-top:1px solid var(--line-soft);padding-top:14px;line-height:1.55}
+
+  /* privacy */
+  .privacy h2{max-width:15em}
+  .priv-points{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:50px}
+  @media (max-width:760px){.priv-points{grid-template-columns:1fr}}
+  .priv{border-left:2px solid var(--accent);padding-left:20px}
+  .priv b{display:block;font-size:17px;margin-bottom:7px;letter-spacing:-.01em;font-weight:600}
+  .priv span{color:var(--muted);font-size:15px;line-height:1.6}
+
+  /* final cta */
+  .final{
+    text-align:center;border-radius:30px;padding:92px 28px;
+    background:
+      radial-gradient(620px 320px at 50% -10%,rgba(18,165,106,.14),transparent 66%),
+      linear-gradient(180deg,#FFFFFF,#F6F5F0);
+    border:1px solid var(--line-soft);box-shadow:var(--shadow);
+  }
+  .final img.mark-icon{height:80px;margin:0 auto 26px;border-radius:20px;box-shadow:var(--shadow-soft)}
+  .final h2{margin-bottom:16px}
+  .final .sub{margin-inline:auto}
+  .final .cta-row{justify-content:center;margin-top:36px}
+
+  footer{padding:54px 0 70px;color:var(--faint);font-size:14px;position:relative;z-index:1}
+  .foot{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    border-top:1px solid var(--line-soft);padding-top:36px}
+  .foot .links{display:flex;gap:24px}
+  .foot a:hover{color:var(--ink)}
+  .foot .brand span{color:var(--faint)}
+
+  /* reveal animation */
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+  @media (prefers-reduced-motion:reduce){
+    .reveal{opacity:1;transform:none;transition:none}
+    .hero .phone{animation:none}.eyebrow .dot{animation:none}html{scroll-behavior:auto}
+  }
 </style>
 </head>
 <body>
-  <div class="pill">Fuerza</div>
-  <h1>Privacy Policy</h1>
-  <p class="sub">Last updated: June 9, 2026</p>
 
-  <p>Fuerza ("the app") is a workout tracker developed by Strei Technologies. We built Fuerza
-  to keep your training data private. This policy explains what the app does and does not do
-  with your information.</p>
+<div class="wash wash-a"></div>
+<div class="wash wash-b"></div>
 
-  <h2>The short version</h2>
-  <p>Fuerza stores your workout data <strong>on your device</strong>. We do not operate servers
-  that collect your personal data, we do not sell or share your data, and we do not use
-  third-party analytics or advertising trackers.</p>
+<nav>
+  <div class="wrap nav-in">
+    <a href="#top" class="brand" aria-label="Fuerza home"><img src="assets/icon-180.png" alt=""><span>FUERZA</span></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#coach">Coach</a>
+      <a href="#privacy">Privacy</a>
+      <a class="btn" href="#get">Get Fuerza</a>
+    </div>
+  </div>
+</nav>
 
-  <h2>Data you create</h2>
-  <p>Workouts, exercises, routines, set logs, notes, personal records, and any text you paste
-  in to import a routine or history are saved locally on your device using Apple's on-device
-  storage. This data stays on your device and any backups <em>you</em> choose to make through
-  Apple (for example, iCloud device backups managed by iOS).</p>
+<header id="top">
+  <div class="wrap hero">
+    <div>
+      <span class="eyebrow"><span class="dot"></span>For iPhone · English y español</span>
+      <h1>Less app.<br><em>More strength.</em></h1>
+      <p class="lede">The workout log that gets out of your way — one-tap sets, a private coach that tells you exactly what to beat today, and your whole plan in your pocket.</p>
+      <div class="cta-row">
+        <a class="store-badge" href="#get" id="store-link">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.73 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.88 1.44-.06 1.99-.93 3.73-.93s2.24.93 3.77.9c1.56-.02 2.55-1.41 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.01-3.03-1.16-3.06-4.58zM14.16 4.06c.79-.96 1.33-2.29 1.18-3.62-1.14.05-2.53.76-3.35 1.72-.73.85-1.38 2.21-1.21 3.51 1.28.1 2.58-.65 3.38-1.61z"/></svg>
+          <span class="t"><small>Coming soon to the</small><b>App Store</b></span>
+        </a>
+        <span class="soon">Free · No account needed</span>
+      </div>
+    </div>
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen">
+          <div class="carousel" id="heroCarousel" aria-roledescription="carousel" aria-label="Explore Fuerza's screens">
+            <div class="track" id="heroTrack">
+              <img src="assets/shot-home.png" alt="Fuerza home screen: your coach's brief, week progress, and today's workout" loading="eager">
+              <img src="assets/shot-workout.png" alt="An active Fuerza workout with a coach target and logged sets" loading="lazy">
+              <img src="assets/shot-progress.png" alt="Fuerza progress dashboard with coach's take and weekly volume" loading="lazy">
+              <img src="assets/shot-plan.png" alt="Fuerza plan tab with weekly schedule and routines" loading="lazy">
+            </div>
+            <button class="tapzone left" type="button" aria-label="Previous screen"></button>
+            <button class="tapzone right" type="button" aria-label="Next screen"></button>
+          </div>
+        </div>
+      </div>
+      <div class="phone-ui">
+        <div class="phone-dots" id="phoneDots" role="tablist" aria-label="Choose a screen"></div>
+        <p class="phone-cap" id="phoneCap" aria-live="polite"></p>
+        <span class="phone-hint" id="phoneHint">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+          Swipe or tap to explore
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
 
-  <h2>Artificial intelligence features</h2>
-  <p>Fuerza's AI coaching and import features run <strong>on your device</strong> using Apple's
-  on-device machine-learning frameworks. The text you import and your workout history are
-  processed locally and are not transmitted to us or to any third party for AI processing.</p>
+<div class="strip wrap reveal">
+  <span class="chip"><b>100%</b> on-device</span>
+  <span class="chip"><b>0</b> accounts</span>
+  <span class="chip"><b>0</b> ads</span>
+  <span class="chip">lb <b>·</b> kg</span>
+  <span class="chip">English <b>·</b> Español</span>
+</div>
 
-  <h2>Data we collect</h2>
-  <p>Strei Technologies does not collect personal information from the app. We have no accounts,
-  no login, and no analytics SDKs that identify you.</p>
-  <p>If you use the app through TestFlight, Apple may collect basic, aggregated crash and usage
-  information and share it with us to improve the app, as described in
-  <a href="https://www.apple.com/legal/privacy/">Apple's Privacy Policy</a>. This is governed by
-  Apple, not by us.</p>
+<section id="features">
+  <div class="wrap">
+    <div class="reveal">
+      <div class="mark"><span class="n">01</span><span class="ln"></span><span class="t">Made for real training</span></div>
+      <h2>Log a set in a single tap.</h2>
+      <p class="sub">Every interaction is designed for one hand, mid-set — fast, quiet, and out of your way.</p>
+    </div>
+    <div class="grid">
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 11.5V5a1.5 1.5 0 0 1 3 0v6m0-2.5a1.5 1.5 0 0 1 3 0V12m0-1.5a1.5 1.5 0 0 1 3 0V15a6 6 0 0 1-6 6h-1.2a6 6 0 0 1-4.9-2.5L3.6 14.7a1.6 1.6 0 0 1 2.5-2L8 14.5"/></svg></div>
+        <h3>Hold &amp; slide to adjust</h3>
+        <p>Press any weight or rep and slide — no keyboard, no fiddling. Sets pre-fill from last session, so most of the time you just confirm.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2.5 2.5M9 2h6"/></svg></div>
+        <h3>Timers that ride in your pocket</h3>
+        <p>A stopwatch since your last set, an optional rest countdown with locked-phone alerts, and a Log Set button right on the Lock Screen and Dynamic Island.</p>
+      </div>
+      <div class="card reveal">
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18V6l12-2v12M9 18a3 3 0 1 1-6 0 3 3 0 0 1 6 0zm12-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg></div>
+        <h3>Your music rides along</h3>
+        <p>Apple Music or Spotify, controlled inside your workout — album art, skips, scrubbing — without ever leaving the app.</p>
+      </div>
+      <div class="card reveal">
+        <span class="tag">ONE-TIME EDITS</span>
+        <div class="ic"><svg viewBox="0 0 24 24"><path d="M8 7h13M8 12h13M8 17h13M3.5 7h.01M3.5 12h.01M3.5 17h.01"/></svg></div>
+        <h3>Life-proof planning</h3>
+        <p>Swap an exercise mid-workout, edit a single day, move a session, roll a skipped lift into your next one — none of it ever touches your actual plan.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <h2>Permissions</h2>
-  <p>Fuerza may ask permission to send local notifications (for rest timers and reminders). You
-  can change this anytime in iOS Settings. The app does not request access to your contacts,
-  photos, location, or health data unless a feature you explicitly use requires it.</p>
+<section id="coach" style="padding-top:24px">
+  <div class="wrap">
+    <div class="coach-band reveal">
+      <div>
+        <div class="mark"><span class="n">02</span><span class="ln"></span><span class="t">The coach</span></div>
+        <h2 style="font-size:clamp(28px,3.8vw,42px)">It knows your numbers, so you don't have to.</h2>
+        <p class="sub">Every exercise opens with a concrete target computed from your own history — beat last time, set by set. Clear your rep range and it tells you to add weight. Stall for three sessions and it prescribes a smart back-off instead of letting you grind. Note pain and it never adds load.</p>
+      </div>
+      <div class="target-card">
+        <div class="lab"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1"/></svg>COACH TARGET</div>
+        <div class="big">185 × 8/8/8 <span>lb</span></div>
+        <div class="why">Beat 8/8/7 — go 8/8/8. You noted last session felt easy, so the target is bigger.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
-  <h2>Children</h2>
-  <p>Fuerza is not directed to children under 13 and does not knowingly collect data from them.</p>
+<section style="padding-top:8px;padding-bottom:8px">
+  <div class="wrap">
+    <div class="show reveal">
+      <div>
+        <div class="mark"><span class="n">03</span><span class="ln"></span><span class="t">In the session</span></div>
+        <h3>Everything you need. Nothing you don't.</h3>
+        <p>One card per exercise: your target, your sets, your notes — written inline like a text message, and read by the coach for next time.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Targets in your exercise's own language — lb, kg, machine levels, or seconds held</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>PR detection with a gold landmark the moment you earn it</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Quick-log a whole session in plain text — “bench 185 8,8,7”</li>
+        </ul>
+      </div>
+      <div class="phone-col"><div class="phone"><div class="island"></div><div class="screen"><img src="assets/shot-workout.png" alt="An active Fuerza workout with a coach target and logged sets" loading="lazy"></div></div></div>
+    </div>
 
-  <h2>Changes to this policy</h2>
-  <p>We may update this policy as the app evolves. Material changes will be reflected on this page
-  with a new "Last updated" date.</p>
+    <div class="show reveal">
+      <div>
+        <div class="mark"><span class="n">04</span><span class="ln"></span><span class="t">The receipts</span></div>
+        <h3>Progress, honestly counted.</h3>
+        <p>A deterministic coach's read, weekly volume against your own average, workouts against your plan, PRs, streaks, and an activity calendar — every number computed from your logs, never invented.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>“So far this week” honesty on partial weeks</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>A plan line on the frequency chart — are you hitting it?</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Rearrange or hide every section. Your dashboard.</li>
+        </ul>
+      </div>
+      <div class="phone-col"><div class="phone"><div class="island"></div><div class="screen"><img src="assets/shot-progress.png" alt="Fuerza progress dashboard with coach's take and weekly volume" loading="lazy"></div></div></div>
+    </div>
 
-  <h2>Contact</h2>
-  <p>Questions about your privacy? Email
-  <a href="mailto:spencerstrei@gmail.com">spencerstrei@gmail.com</a>.</p>
+    <div class="show reveal">
+      <div>
+        <div class="mark"><span class="n">05</span><span class="ln"></span><span class="t">Your plan, your way</span></div>
+        <h3>Paste a program. Get a plan.</h3>
+        <p>Bring a program from your notes, your coach, or your favorite AI — Fuerza turns it into a fully configured weekly plan. No program yet? Start with the ready-made 4-day split, or let us hand your AI a coach prompt that writes one for you.</p>
+        <ul class="checks">
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Import years of history from any app or spreadsheet</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Schedule across your week, reschedule one-off days</li>
+          <li><svg viewBox="0 0 24 24"><path d="M4.5 12.5l5 5 10-11"/></svg>Export everything, anytime. It's your data.</li>
+        </ul>
+      </div>
+      <div class="phone-col"><div class="phone"><div class="island"></div><div class="screen"><img src="assets/shot-plan.png" alt="Fuerza plan tab with weekly schedule and routines" loading="lazy"></div></div></div>
+    </div>
+  </div>
+</section>
 
-  <footer>© 2026 Strei Technologies. Fuerza — Less app. More gains.</footer>
+<section id="privacy" class="privacy">
+  <div class="wrap reveal">
+    <div class="mark"><span class="n">06</span><span class="ln"></span><span class="t">Privacy</span></div>
+    <h2>Your training stays on your phone.</h2>
+    <div class="priv-points">
+      <div class="priv"><b>No accounts</b><span>Open the app and start lifting. There's nothing to sign up for, so there's nothing to leak.</span></div>
+      <div class="priv"><b>No tracking, no ads</b><span>Zero analytics SDKs. The privacy “nutrition label” reads: data collected — none.</span></div>
+      <div class="priv"><b>On-device coach</b><span>Every target and insight is computed on your iPhone. Export and sharing happen only when you choose.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="get" style="padding-top:24px">
+  <div class="wrap">
+    <div class="final reveal">
+      <img class="mark-icon" src="assets/icon-180.png" alt="Fuerza app icon">
+      <h2>Lift, log, never plateau.</h2>
+      <p class="sub">Fuerza 1.0 is coming to the App Store. Free, in English y español.</p>
+      <div class="cta-row">
+        <a class="store-badge" href="#" aria-disabled="true">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M17.05 12.54c-.03-2.89 2.36-4.27 2.47-4.34-1.35-1.97-3.44-2.24-4.18-2.27-1.78-.18-3.47 1.05-4.37 1.05-.9 0-2.29-1.02-3.77-1-1.94.03-3.73 1.13-4.72 2.86-2.01 3.49-.51 8.66 1.45 11.49.96 1.39 2.1 2.94 3.6 2.88 1.44-.06 1.99-.93 3.73-.93s2.24.93 3.77.9c1.56-.02 2.55-1.41 3.5-2.81 1.1-1.61 1.55-3.17 1.58-3.25-.04-.01-3.03-1.16-3.06-4.58zM14.16 4.06c.79-.96 1.33-2.29 1.18-3.62-1.14.05-2.53.76-3.35 1.72-.73.85-1.38 2.21-1.21 3.51 1.28.1 2.58-.65 3.38-1.61z"/></svg>
+          <span class="t"><small>Coming soon to the</small><b>App Store</b></span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot">
+    <a href="#top" class="brand"><img src="assets/icon-180.png" alt=""><span>FUERZA</span></a>
+    <div class="links">
+      <a href="privacy.html">Privacy Policy</a>
+      <a href="mailto:support@fuerza.app">Support</a>
+    </div>
+    <span>© 2026 Strei Technologies</span>
+  </div>
+</footer>
+
+<script>
+  const io = new IntersectionObserver((entries) => {
+    for (const e of entries) if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  /* ---------- interactive hero phone (swipe / tap / dots / keyboard) ---------- */
+  (function(){
+    const root = document.getElementById('heroCarousel');
+    if(!root) return;
+    const track = document.getElementById('heroTrack');
+    const dotsWrap = document.getElementById('phoneDots');
+    const cap = document.getElementById('phoneCap');
+    const hint = document.getElementById('phoneHint');
+    const slides = Array.from(track.querySelectorAll('img'));
+    const labels = ['Home', 'Active workout', 'Progress', 'Plan'];
+    const n = slides.length;
+    const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+    let i = 0, autoTimer = null, interacted = false;
+
+    const dots = labels.map((lab, idx) => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('role', 'tab');
+      b.setAttribute('aria-label', lab);
+      b.addEventListener('click', () => { stopAuto(); go(idx); });
+      dotsWrap.appendChild(b);
+      return b;
+    });
+
+    function render(){
+      track.style.transform = 'translateX(' + (-i * 100) + '%)';
+      dots.forEach((d, idx) => d.setAttribute('aria-selected', idx === i ? 'true' : 'false'));
+      if (cap) cap.innerHTML = '<b>' + labels[i] + '</b>';
+    }
+    function go(idx){ i = (idx + n) % n; track.classList.remove('nosnap'); render(); }
+    const next = () => go(i + 1);
+    const prev = () => go(i - 1);
+
+    root.querySelector('.tapzone.left').addEventListener('click', () => { stopAuto(); prev(); });
+    root.querySelector('.tapzone.right').addEventListener('click', () => { stopAuto(); next(); });
+
+    // Keyboard: arrows move between screens when the phone is focused.
+    root.tabIndex = 0;
+    root.addEventListener('keydown', e => {
+      if (e.key === 'ArrowRight') { stopAuto(); next(); e.preventDefault(); }
+      else if (e.key === 'ArrowLeft') { stopAuto(); prev(); e.preventDefault(); }
+    });
+
+    // Pointer drag / swipe. We only hijack the gesture once it's clearly
+    // horizontal, so vertical page scrolling over the phone still works.
+    let startX = 0, startY = 0, dx = 0, w = 0, dragging = false, decided = false, horizontal = false, suppress = false;
+    root.addEventListener('pointerdown', e => {
+      dragging = true; decided = false; horizontal = false;
+      startX = e.clientX; startY = e.clientY; dx = 0; w = root.clientWidth || 1;
+    });
+    window.addEventListener('pointermove', e => {
+      if (!dragging) return;
+      const mx = e.clientX - startX, my = e.clientY - startY;
+      if (!decided && (Math.abs(mx) > 8 || Math.abs(my) > 8)) { decided = true; horizontal = Math.abs(mx) > Math.abs(my); }
+      if (decided && horizontal) {
+        e.preventDefault();
+        dx = mx;
+        track.classList.add('nosnap');
+        root.classList.add('grabbing');
+        track.style.transform = 'translateX(' + ((-i * 100) + (dx / w * 100)) + '%)';
+      }
+    }, { passive: false });
+    function endDrag(){
+      if (!dragging) return;
+      dragging = false; root.classList.remove('grabbing');
+      if (decided && horizontal) {
+        track.classList.remove('nosnap');
+        const th = w * 0.16;
+        if (dx <= -th) { stopAuto(); next(); suppress = true; }
+        else if (dx >= th) { stopAuto(); prev(); suppress = true; }
+        else render();
+      }
+    }
+    window.addEventListener('pointerup', endDrag);
+    window.addEventListener('pointercancel', endDrag);
+    // Swallow the click a swipe would otherwise synthesize on a tap zone.
+    root.addEventListener('click', e => { if (suppress) { suppress = false; e.preventDefault(); e.stopPropagation(); } }, true);
+
+    function startAuto(){ if (reduce || interacted) return; clearInterval(autoTimer); autoTimer = setInterval(next, 4200); }
+    function stopAuto(){ interacted = true; clearInterval(autoTimer); autoTimer = null; if (hint) hint.classList.add('gone'); }
+    root.addEventListener('pointerenter', () => { clearInterval(autoTimer); autoTimer = null; });
+    root.addEventListener('pointerleave', () => { if (!interacted && !reduce) { clearInterval(autoTimer); autoTimer = setInterval(next, 4200); } });
+
+    render();
+    startAuto();
+  })();
+
+</script>
 </body>
 </html>
